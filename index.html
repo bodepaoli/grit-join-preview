@@ -7,7 +7,7 @@
 <title>Grit Fitness — $1 to join (preview)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>body{margin:0;background:#fff}[v-cloak]{display:none}html{scroll-behavior:smooth}</style>
+<style>body{margin:0;background:#fff}[v-cloak]{display:none}.chg{}.cmpbar{position:sticky;top:0;z-index:50;background:#111;color:#fff;font:500 14px/1.4 Inter,sans-serif;padding:10px max(16px,env(safe-area-inset-left,0px));display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:center}.cmpbar button{font:600 14px Inter,sans-serif;min-height:40px;padding:0 16px;border-radius:999px;border:1px solid #555;background:transparent;color:#fff;cursor:pointer}.cmpbar button[aria-pressed=true]{background:#FFF200;color:#111;border-color:#FFF200}.cmpbar .lg{color:#cfcfcf}.cmpbar .lg u{text-decoration:underline wavy #E0B400;text-underline-offset:4px}html{scroll-behavior:smooth}</style>
 </head>
 <body>
 <div id="app" v-cloak>
@@ -35,8 +35,8 @@
   <section style="max-width: 1120px; margin: 0 auto; padding: clamp(28px, 6vw, 72px) 20px clamp(32px, 6vw, 64px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: clamp(24px, 4vw, 56px); align-items: center">
     <div style="display: flex; flex-direction: column; gap: 20px">
       <div :style="`align-self: flex-start; background: ${accent}; color: #111111; font-weight: 700; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 12px; border-radius: 6px`">November only · $1 to join</div>
-      <h1 style="margin: 0; font-family: Oswald, Impact, sans-serif; font-weight: 700; font-size: clamp(44px, 7vw, 76px); line-height: 0.98; text-transform: uppercase; letter-spacing: 0.005em">25,000 sq ft of strength, recovery &amp; 24/7 access.</h1>
-      <p style="margin: 0; font-size: clamp(18px, 2.2vw, 21px); color: #374151; max-width: 34ch">Join Grit Fitness in Schererville for <strong style="color: #111111">$1</strong> this month. Elite is <strong style="color: #111111">$12 a week</strong> — less than a cup of coffee a day.</p>
+      <h1 style="margin: 0; font-family: Oswald, Impact, sans-serif; font-weight: 700; font-size: clamp(44px, 7vw, 76px); line-height: 0.98; text-transform: uppercase; letter-spacing: 0.005em"><span :class="p ? 'chg' : ''">{{ p ? 'Stop starting over every Monday.' : '25,000 sq ft of strength, recovery & 24/7 access.' }}</span></h1>
+      <p style="margin: 0; font-size: clamp(18px, 2.2vw, 21px); color: #374151; max-width: 34ch"><template v-if="!p">Join Grit Fitness in Schererville for <strong style="color: #111111">$1</strong> this month. Elite is <strong style="color: #111111">$12 a week</strong> — less than a cup of coffee a day.</template><span v-else class="chg">No waiting for the hip thrust. No feeling watched. A gym that's open whenever your day allows, with a sauna waiting after. Start for <strong style="color: #111111">$1</strong>. Elite is <strong style="color: #111111">$12 a week</strong>, less than a cup of coffee a day.</span></p>
       <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px">
         <button type="button" @click="claim" :style="`min-height: 58px; padding: 0 30px; border: 0; background: ${accent}; color: #111111; border-radius: 12px; font: 700 19px Inter, sans-serif; cursor: pointer; box-shadow: 0 2px 0 #111111`">Claim my $1 start</button>
         <span style="font-size: 15px; color: #4B5563">Join online in about 2 minutes.<br>Cancel anytime. Train today.</span>
@@ -82,16 +82,17 @@
 
   <!-- 3. WHAT YOU GET (benefits) -->
   <section style="max-width: 1120px; margin: 0 auto; padding: clamp(48px, 7vw, 88px) 20px">
-    <h2 style="margin: 0 0 8px; font-family: Oswald, Impact, sans-serif; font-weight: 700; font-size: clamp(32px, 4.5vw, 48px); text-transform: uppercase; line-height: 1.05">What you get with Elite</h2>
-    <p style="margin: 0 0 32px; color: #4B5563; max-width: 60ch">Everything in the building, any hour you want it.</p>
+    <h2 style="margin: 0 0 8px; font-family: Oswald, Impact, sans-serif; font-weight: 700; font-size: clamp(32px, 4.5vw, 48px); text-transform: uppercase; line-height: 1.05"><span :class="p ? 'chg' : ''">{{ p ? 'Why members finally stick with it' : 'What you get with Elite' }}</span></h2>
+    <p style="margin: 0 0 32px; color: #4B5563; max-width: 60ch"><span :class="p ? 'chg' : ''">{{ p ? 'You\'ve tried gyms before. Here\'s what\'s different at Grit.' : 'Everything in the building, any hour you want it.' }}</span></p>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px">
       <template v-for="b in benefits">
         <div style="border: 1px solid #E5E7EB; border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 8px">
           <div :style="`width: 44px; height: 44px; border-radius: 10px; background: ${accent}; display: flex; align-items: center; justify-content: center`">
             <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path :d="b.icon"></path></svg>
           </div>
-          <div style="font-weight: 700; font-size: 19px">{{b.title}}</div>
-          <div style="color: #374151; font-size: 16px">{{b.text}}</div>
+          <div style="font-weight: 700; font-size: 19px"><span :class="p ? 'chg' : ''">{{ p ? b.nt : b.title }}</span></div>
+          <div style="color: #374151; font-size: 16px"><span :class="p ? 'chg' : ''">{{ p ? b.nx : b.text }}</span></div>
+          <div v-if="p && b.np" class="chg" style="font-size: 14px; font-weight: 600; color: #111111; border-top: 1px solid #E5E7EB; padding-top: 10px">{{ b.np }}</div>
         </div>
       </template>
     </div>
@@ -102,8 +103,8 @@
     <div style="max-width: 1120px; margin: 0 auto; padding: clamp(48px, 7vw, 88px) 20px; display: flex; flex-direction: column; gap: 28px">
       <div style="display: flex; flex-direction: column; gap: 8px">
         <div :style="`color: ${accent}; font-weight: 700; font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase`">The equipment</div>
-        <h2 style="margin: 0; font-family: Oswald, Impact, sans-serif; font-weight: 700; font-size: clamp(32px, 4.5vw, 52px); text-transform: uppercase; line-height: 1.02">Built with the best iron in the business</h2>
-        <p style="margin: 0; color: #D1D5DB; max-width: 60ch">150+ pieces across 25,000 sq ft and two floors — from the brands serious lifters ask for by name.</p>
+        <h2 style="margin: 0; font-family: Oswald, Impact, sans-serif; font-weight: 700; font-size: clamp(32px, 4.5vw, 52px); text-transform: uppercase; line-height: 1.02"><span :class="p ? 'chg' : ''">{{ p ? 'Built so you keep getting stronger' : 'Built with the best iron in the business' }}</span></h2>
+        <p style="margin: 0; color: #D1D5DB; max-width: 60ch"><span :class="p ? 'chg' : ''">{{ p ? 'Most gyms run out of machines before you run out of goals. 150+ pieces across two floors, from the brands serious lifters ask for by name.' : '150+ pieces across 25,000 sq ft and two floors — from the brands serious lifters ask for by name.' }}</span></p>
       </div>
       <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr)); gap: 12px">
         <template v-for="br in brands">
@@ -134,8 +135,8 @@
                 <span :style="`font-size: 13px; font-weight: 700; color: #111111; background: ${accent}; padding: 3px 8px; border-radius: 6px`">{{z.tag}}</span>
               </div>
               <ul style="margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; color: #E5E7EB; font-size: 16px">
-                <template v-for="it in z.items">
-                  <li style="display: flex; gap: 10px; align-items: flex-start"><span aria-hidden="true" :style="`flex: none; margin-top: 9px; width: 8px; height: 8px; border-radius: 2px; background: ${accent}`"></span><span>{{it}}</span></li>
+                <template v-for="it in (p ? z.nitems : z.items)">
+                  <li style="display: flex; gap: 10px; align-items: flex-start"><span aria-hidden="true" :style="`flex: none; margin-top: 9px; width: 8px; height: 8px; border-radius: 2px; background: ${accent}`"></span><span :class="p ? 'chg' : ''">{{it}}</span></li>
                 </template>
               </ul>
             </div>
@@ -148,7 +149,7 @@
   <!-- 4. TAKE A LOOK INSIDE: short looping passes of each area -->
   <section style="max-width: 1120px; margin: 0 auto; padding: clamp(48px, 7vw, 88px) 20px">
     <h2 style="margin: 0 0 8px; font-family: Oswald, Impact, sans-serif; font-weight: 700; font-size: clamp(32px, 4.5vw, 48px); text-transform: uppercase; line-height: 1.05">Take a look inside</h2>
-    <p style="margin: 0 0 24px; color: #4B5563">Every area, on a loop. All included with Elite.</p>
+    <p style="margin: 0 0 24px; color: #4B5563"><span :class="p ? 'chg' : ''">{{ p ? 'Picture your first week here. Every area is included with Elite.' : 'Every area, on a loop. All included with Elite.' }}</span></p>
     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px">
       <template v-for="c in clips">
         <figure style="margin: 0; display: flex; flex-direction: column; gap: 8px">
@@ -214,7 +215,7 @@
       <div style="display: flex; flex-direction: column; gap: 14px">
         <div :style="`color: ${accent}; font-weight: 700; font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase`">November only · ends Mon 11/30</div>
         <h2 style="margin: 0; font-family: Oswald, Impact, sans-serif; font-weight: 700; font-size: clamp(40px, 6vw, 64px); text-transform: uppercase; line-height: 1">$1 to join.<br>All access.</h2>
-        <p style="margin: 0; color: #E5E7EB; font-size: 18px; max-width: 40ch">Lock in Elite — the whole gym, 24/7 — for $1 to start. {{daysLeft}} to claim it.</p>
+        <p style="margin: 0; color: #E5E7EB; font-size: 18px; max-width: 40ch"><span :class="p ? 'chg' : ''">{{ p ? 'You\'ve waited long enough. Start this week: Elite, the whole gym 24/7, for $1 to start.' : 'Lock in Elite — the whole gym, 24/7 — for $1 to start.' }}</span> {{daysLeft}} to claim it.</p>
       </div>
       <div style="background: #FFFFFF; color: #111111; border-radius: 18px; padding: 28px; display: flex; flex-direction: column; gap: 16px">
         <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap">
@@ -380,7 +381,7 @@ class DCLogic { constructor(props) { this.props = props; this.state = {}; } }
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { showForm: false, step: 'info', open: 0, plan: 'elite', compareOpen: false, heroVideo: false };
+    this.state = { showForm: false, step: 'info', open: 0, plan: 'elite', compareOpen: false, heroVideo: false, proposed: true };
   }
   componentDidMount() {
     // Load the hero tour only after the page itself has finished loading, so it never slows the first paint.
@@ -440,6 +441,8 @@ class Component extends DCLogic {
       accent,
       daysLeft,
       heroVideo: this.state.heroVideo,
+      p: this.state.proposed !== false,
+      setMode: (v) => this.setState({ proposed: v }),
       showTransformations: this.props.showTransformations ?? false,
       claim: () => this.setState({ showForm: true, step: 'info', plan: 'elite' }),
       closeForm: () => this.setState({ showForm: false, step: 'info' }),
@@ -465,12 +468,12 @@ class Component extends DCLogic {
         { value: '2 min', label: 'to join online' },
       ],
       benefits: [
-        { title: 'Lift heavy, any hour', text: 'Your own Lift Studio and 24/7 access — train before work, after the kids are down, or at 2 AM.', icon: 'M6 7v10M18 7v10M3 10v4M21 10v4M6 12h12' },
-        { title: 'Recover like an athlete', text: 'Dry sauna, cryo and hydro therapy, and red light — feel better between workouts.', icon: 'M12 3c3 4 5 6.5 5 9.5a5 5 0 0 1-10 0C7 9.5 9 7 12 3z' },
-        { title: 'Coaching included', text: 'Unlimited Small Group Training. Get a plan and people who expect to see you.', icon: 'M16 19v-1a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v1M9.5 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6M21 19v-1a4 4 0 0 0-3-3.9M16 4.1a3 3 0 0 1 0 5.8' },
-        { title: 'Never outgrow it', text: '150+ pieces from Hammer Strength, Prime, Arsenal and Booty Builder, plus racks, platforms and dumbbells.', icon: 'M4 20h16M7 20V9M12 20V4M17 20v-7' },
-        { title: 'Cardio without the wait', text: 'Treadmills, bikes, stairs and machines across 25,000 sq ft.', icon: 'M22 12h-4l-3 8-6-16-3 8H2' },
-        { title: 'Unlimited tanning & red light', text: 'Included with Elite — no add-on, no per-session fee.', icon: 'M12 4V2M12 22v-2M4.9 4.9 3.5 3.5M20.5 20.5l-1.4-1.4M4 12H2M22 12h-2M4.9 19.1l-1.4 1.4M20.5 3.5l-1.4 1.4M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8' },
+        { nt: 'Busy week? You can still train.', nx: 'Open 24/7. Lift before work, after the kids are down, or at 2 AM, so a crazy week doesn\'t end your streak.', np: '', title: 'Lift heavy, any hour', text: 'Your own Lift Studio and 24/7 access — train before work, after the kids are down, or at 2 AM.', icon: 'M6 7v10M18 7v10M3 10v4M21 10v4M6 12h12' },
+        { nt: 'No more waiting on leg day.', nx: 'The Lift Studio is a whole room for glutes and legs, with machines other gyms around here don\'t have.', np: '80 members upgraded to Elite for the Lift Studio in its first month.', title: 'Recover like an athlete', text: 'Dry sauna, cryo and hydro therapy, and red light — feel better between workouts.', icon: 'M12 3c3 4 5 6.5 5 9.5a5 5 0 0 1-10 0C7 9.5 9 7 12 3z' },
+        { nt: 'Never wonder what to do.', nx: 'Unlimited Small Group Training gives you a plan, and coaches who notice when you\'re not there.', np: '', title: 'Coaching included', text: 'Unlimited Small Group Training. Get a plan and people who expect to see you.', icon: 'M16 19v-1a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v1M9.5 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6M21 19v-1a4 4 0 0 0-3-3.9M16 4.1a3 3 0 0 1 0 5.8' },
+        { nt: 'Walk in and feel welcome.', nx: 'Not crowded, not overwhelming. You do your workout, and our staff learns your name.', np: '“They always greet you and know you by name.” Google review', title: 'Never outgrow it', text: '150+ pieces from Hammer Strength, Prime, Arsenal and Booty Builder, plus racks, platforms and dumbbells.', icon: 'M4 20h16M7 20V9M12 20V4M17 20v-7' },
+        { nt: 'Leave feeling better than you came in.', nx: 'Sauna, cryo, hydro massage and red light are all included, so you recover and come back ready.', np: '', title: 'Cardio without the wait', text: 'Treadmills, bikes, stairs and machines across 25,000 sq ft.', icon: 'M22 12h-4l-3 8-6-16-3 8H2' },
+        { nt: 'Look and feel your best.', nx: 'Unlimited tanning and red light with Elite. No add-ons, no per-session fees.', np: '', title: 'Unlimited tanning & red light', text: 'Included with Elite — no add-on, no per-session fee.', icon: 'M12 4V2M12 22v-2M4.9 4.9 3.5 3.5M20.5 20.5l-1.4-1.4M4 12H2M22 12h-2M4.9 19.1l-1.4 1.4M20.5 3.5l-1.4 1.4M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8' },
       ],
       brands: [
         { name: 'Hammer Strength', logo: 'media/brands-hammer-white.svg', stripH: '18px', wallH: '24px' },
@@ -493,11 +496,11 @@ class Component extends DCLogic {
       ],
       zones: [
         { title: 'Main strength floor', tag: 'All plans', photo: 'media/up-main-floor.jpg', alt: 'Two-story main strength floor lined with yellow Prime plate-loaded machines',
-          items: ['Rows of Prime plate-loaded machines — chest press, rows, Extreme Row', 'Hammer Strength and Arsenal Strength machines for every muscle group', 'Two floors, with the mezzanine above'] },
+          nitems: ['Guided machines so you can lift heavy with confidence', 'Prime, Hammer Strength and Arsenal for every muscle group', 'Two floors, so there\'s always room to train'], items: ['Rows of Prime plate-loaded machines — chest press, rows, Extreme Row', 'Hammer Strength and Arsenal Strength machines for every muscle group', 'Two floors, with the mezzanine above'] },
         { title: 'Lift Studio', tag: 'Elite only', photo: 'media/up-lift-studio.jpg', alt: 'Lift Studio with squat racks, platforms and Booty Builder machines under warm lighting',
-          items: ['Squat racks and lifting platforms', 'Booty Builder hip thrust and glute machines', 'A dedicated strength space, away from the main floor'] },
+          nitems: ['A quieter space just for leg and glute days', 'Squat racks, platforms and Booty Builder hip thrust machines', 'Film your sets without anyone in your way'], items: ['Squat racks and lifting platforms', 'Booty Builder hip thrust and glute machines', 'A dedicated strength space, away from the main floor'] },
         { title: 'Free weights', tag: 'All plans', photo: 'media/up-free-weights.jpg', alt: 'Long rack of dumbbells with the mezzanine behind',
-          items: ['Full dumbbell racks', 'Benches, racks and platforms', 'Turf and open floor for sleds, stretching and conditioning'] },
+          nitems: ['Full dumbbell racks, benches and platforms', 'Turf for sleds, stretching and conditioning', 'Room to do your own workout, your own way'], items: ['Full dumbbell racks', 'Benches, racks and platforms', 'Turf and open floor for sleds, stretching and conditioning'] },
       ],
       clips: [
         { title: 'Main floor', src: 'media/clips2-floor.mp4', poster: 'media/clips2-floor.jpg', alt: 'Panning across the main floor' },
