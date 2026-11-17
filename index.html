@@ -17,7 +17,7 @@
 
   <!-- promo strip -->
   <div style="background: #111111; color: #FFFFFF; text-align: center; padding: 10px 16px; font-size: 14px; font-weight: 600; letter-spacing: 0.02em">
-    November only: <span :style="`color: ${accent}`">$1 to join</span> · ends Mon 11/30 · {{daysLeft}}
+    <span v-show="!q">November only: <span :style="`color: ${accent}`">$1 to join</span> · ends Mon 11/30 · {{daysLeft}}</span><span v-show="q" class="chg">November only: enrollment <s style="opacity:.7">$29</s> <span :style="`color: ${accent}`">$1</span> · ends Mon 11/30 · {{daysLeft}}</span>
   </div>
 
   <!-- nav: logo + one action only -->
@@ -27,33 +27,34 @@
         <img src="media/up-logo-crop.png" alt="Grit Fitness" style="height: 44px; width: auto; display: block">
         <span style="font-weight: 600; font-size: 13px; letter-spacing: 0.14em; color: #D1D5DB; text-transform: uppercase">Schererville</span>
       </div>
-      <button type="button" @click="claim" :style="`min-height: 44px; padding: 0 18px; border: 0; background: ${accent}; color: #111111; border-radius: 999px; font: 700 15px Inter, sans-serif; cursor: pointer`">Claim $1 start</button>
+      <button v-if="!q" type="button" @click="claim" :style="`min-height: 44px; padding: 0 18px; border: 0; background: ${accent}; color: #111111; border-radius: 999px; font: 700 15px Inter, sans-serif; cursor: pointer`">Claim $1 start</button>
     </div>
   </header>
 
   <!-- 1. HERO -->
   <section style="max-width: 1120px; margin: 0 auto; padding: clamp(28px, 6vw, 72px) 20px clamp(32px, 6vw, 64px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: clamp(24px, 4vw, 56px); align-items: center">
     <div style="display: flex; flex-direction: column; gap: 20px">
-      <div :style="`align-self: flex-start; background: ${accent}; color: #111111; font-weight: 700; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 12px; border-radius: 6px`">November only · $1 to join</div>
-      <h1 style="margin: 0; font-family: Oswald, Impact, sans-serif; font-weight: 700; font-size: clamp(44px, 7vw, 76px); line-height: 0.98; text-transform: uppercase; letter-spacing: 0.005em"><span :class="p ? 'chg' : ''">{{ p ? 'Stop starting over every Monday.' : '25,000 sq ft of strength, recovery & 24/7 access.' }}</span></h1>
-      <p style="margin: 0; font-size: clamp(18px, 2.2vw, 21px); color: #374151; max-width: 34ch"><template v-if="!p">Join Grit Fitness in Schererville for <strong style="color: #111111">$1</strong> this month. Elite is <strong style="color: #111111">$12 a week</strong> — less than a cup of coffee a day.</template><span v-else class="chg">No waiting for the hip thrust. No feeling watched. A gym that's open whenever your day allows, with a sauna waiting after. Start for <strong style="color: #111111">$1</strong>. Elite is <strong style="color: #111111">$12 a week</strong>, less than a cup of coffee a day.</span></p>
+      <div :style="`align-self: flex-start; background: ${accent}; color: #111111; font-weight: 700; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 12px; border-radius: 6px`"><span v-show="!q">November only · $1 to join</span><span v-show="q" class="chg">November only · Enrollment <s>$29</s> $1</span></div>
+      <h1 style="margin: 0; font-family: Oswald, Impact, sans-serif; font-weight: 700; font-size: clamp(44px, 7vw, 76px); line-height: 0.98; text-transform: uppercase; letter-spacing: 0.005em"><span :class="q ? 'chg' : ''">{{ q ? 'Train whenever you want, day or night' : 'Stop starting over every Monday.' }}</span></h1>
+      <p style="margin: 0; font-size: clamp(18px, 2.2vw, 21px); color: #374151; max-width: 34ch"><span v-show="!q">No waiting for the hip thrust. No feeling watched. A gym that's open whenever your day allows, with a sauna waiting after. Start for <strong style="color: #111111">$1</strong>. Elite is <strong style="color: #111111">$12 a week</strong>, less than a cup of coffee a day.</span><span v-show="q" class="chg">Come at 5 AM or 11 PM, when it's quiet and nobody's watching. 24/7 access to 150+ pieces of premium equipment, plus the sauna, red light and tanning. Enrollment is <strong style="color: #111111">$1</strong> this month on our Elite membership, then <strong style="color: #111111">$24 every 2 weeks</strong> for 24/7 access to all of it.</span></p>
       <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px">
-        <button type="button" @click="claim" :style="`min-height: 58px; padding: 0 30px; border: 0; background: ${accent}; color: #111111; border-radius: 12px; font: 700 19px Inter, sans-serif; cursor: pointer; box-shadow: 0 2px 0 #111111`">Claim my $1 start</button>
-        <span style="font-size: 15px; color: #4B5563">Join online in about 2 minutes.<br>Cancel anytime. Train today.</span>
+        <button id="heroCta" type="button" @click="claim" :style="`min-height: 58px; padding: 0 30px; border: 0; background: ${accent}; color: #111111; border-radius: 12px; font: 700 19px Inter, sans-serif; cursor: pointer; box-shadow: 0 2px 0 #111111`">Claim my $1 start</button>
+        <span style="font-size: 15px; color: #4B5563"><span v-show="!q">Join online in about 2 minutes.<br>Cancel anytime. Train today.</span><span v-show="q" class="chg">Join online in 2 minutes.<br>Cancel anytime. Train as early as today.</span></span>
       </div>
-      <a href="https://maps.google.com/?cid=1850928253510393739" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 14px; border: 1px solid #E5E7EB; border-radius: 999px; background: #FFFFFF; color: #111111; text-decoration: none; font-size: 15px">
+      <a v-show="!q" href="https://maps.google.com/?cid=1850928253510393739" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 14px; border: 1px solid #E5E7EB; border-radius: 999px; background: #FFFFFF; color: #111111; text-decoration: none; font-size: 15px">
         <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z" fill="#B45309"></path></svg>
-        <span><strong>266 Google reviews</strong> from members · <span style="text-decoration: underline">read them</span></span>
+        <span v-show="!q"><strong>266 Google reviews</strong> from members · <span style="text-decoration: underline">read them</span></span><span v-show="q" class="chg"><strong>266 Google reviews</strong> from members</span>
       </a>
     </div>
     <div style="position: relative; width: 100%; aspect-ratio: 3 / 2; border-radius: 18px; overflow: hidden; background: #111111; box-shadow: 0 18px 40px rgba(0,0,0,0.18)">
       <img src="media/clips2-hero-tour.jpg" alt="Aerial view of Grit Fitness in Schererville" style="width: 100%; height: 100%; object-fit: cover; display: block">
-      <template v-if="heroVideo">
+      <template v-if="heroVideo && (!q || playTour)">
         <video src="media/clips2-hero-tour.mp4" poster="media/clips2-hero-tour.jpg" autoplay="" muted="" loop="" playsinline="" preload="auto" aria-label="16-second tour of Grit Fitness: recovery, red light, tanning, weights, cardio, functional training and the Lift Studio" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block"></video>
       </template>
       <div style="position: absolute; left: 14px; top: 14px; display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; background: rgba(0,0,0,0.72); color: #FFFFFF; border-radius: 999px; font-weight: 600; font-size: 14px">
         <span aria-hidden="true" :style="`width: 8px; height: 8px; border-radius: 999px; background: ${accent}`"></span>16-second tour
       </div>
+      <button v-if="q && !playTour" type="button" @click="startTour" aria-label="Play the 16-second tour" style="position: absolute; inset: 0; margin: auto; width: 76px; height: 76px; border-radius: 999px; border: 0; background: rgba(0,0,0,0.72); cursor: pointer; display: grid; place-items: center"><svg width="30" height="30" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="#FFF200"></path></svg></button>
     </div>
   </section>
 
@@ -82,17 +83,17 @@
 
   <!-- 3. WHAT YOU GET (benefits) -->
   <section style="max-width: 1120px; margin: 0 auto; padding: clamp(48px, 7vw, 88px) 20px">
-    <h2 style="margin: 0 0 8px; font-family: Oswald, Impact, sans-serif; font-weight: 700; font-size: clamp(32px, 4.5vw, 48px); text-transform: uppercase; line-height: 1.05"><span :class="p ? 'chg' : ''">{{ p ? 'Why members finally stick with it' : 'What you get with Elite' }}</span></h2>
-    <p style="margin: 0 0 32px; color: #4B5563; max-width: 60ch"><span :class="p ? 'chg' : ''">{{ p ? 'You\'ve tried gyms before. Here\'s what\'s different at Grit.' : 'Everything in the building, any hour you want it.' }}</span></p>
+    <h2 style="margin: 0 0 8px; font-family: Oswald, Impact, sans-serif; font-weight: 700; font-size: clamp(32px, 4.5vw, 48px); text-transform: uppercase; line-height: 1.05"><span >{{ p ? 'Why members finally stick with it' : 'What you get with Elite' }}</span></h2>
+    <p style="margin: 0 0 32px; color: #4B5563; max-width: 60ch"><span >{{ p ? 'You\'ve tried gyms before. Here\'s what\'s different at Grit.' : 'Everything in the building, any hour you want it.' }}</span></p>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px">
       <template v-for="b in benefits">
         <div style="border: 1px solid #E5E7EB; border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 8px">
           <div :style="`width: 44px; height: 44px; border-radius: 10px; background: ${accent}; display: flex; align-items: center; justify-content: center`">
             <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path :d="b.icon"></path></svg>
           </div>
-          <div style="font-weight: 700; font-size: 19px"><span :class="p ? 'chg' : ''">{{ p ? b.nt : b.title }}</span></div>
-          <div style="color: #374151; font-size: 16px"><span :class="p ? 'chg' : ''">{{ p ? b.nx : b.text }}</span></div>
-          <div v-if="p && b.np" class="chg" style="font-size: 14px; font-weight: 600; color: #111111; border-top: 1px solid #E5E7EB; padding-top: 10px">{{ b.np }}</div>
+          <div style="font-weight: 700; font-size: 19px"><span >{{ p ? b.nt : b.title }}</span></div>
+          <div style="color: #374151; font-size: 16px"><span >{{ p ? b.nx : b.text }}</span></div>
+          <div v-if="p && b.np" style="font-size: 14px; font-weight: 600; color: #111111; border-top: 1px solid #E5E7EB; padding-top: 10px">{{ b.np }}</div>
         </div>
       </template>
     </div>
@@ -103,8 +104,8 @@
     <div style="max-width: 1120px; margin: 0 auto; padding: clamp(48px, 7vw, 88px) 20px; display: flex; flex-direction: column; gap: 28px">
       <div style="display: flex; flex-direction: column; gap: 8px">
         <div :style="`color: ${accent}; font-weight: 700; font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase`">The equipment</div>
-        <h2 style="margin: 0; font-family: Oswald, Impact, sans-serif; font-weight: 700; font-size: clamp(32px, 4.5vw, 52px); text-transform: uppercase; line-height: 1.02"><span :class="p ? 'chg' : ''">{{ p ? 'Built so you keep getting stronger' : 'Built with the best iron in the business' }}</span></h2>
-        <p style="margin: 0; color: #D1D5DB; max-width: 60ch"><span :class="p ? 'chg' : ''">{{ p ? 'Most gyms run out of machines before you run out of goals. 150+ pieces across two floors, from the brands serious lifters ask for by name.' : '150+ pieces across 25,000 sq ft and two floors — from the brands serious lifters ask for by name.' }}</span></p>
+        <h2 style="margin: 0; font-family: Oswald, Impact, sans-serif; font-weight: 700; font-size: clamp(32px, 4.5vw, 52px); text-transform: uppercase; line-height: 1.02"><span >{{ p ? 'Built so you keep getting stronger' : 'Built with the best iron in the business' }}</span></h2>
+        <p style="margin: 0; color: #D1D5DB; max-width: 60ch"><span :class="q ? 'chg' : ''">{{ q ? 'Most gyms buy one or two budget brands and call it done. We went the other way: Hammer Strength, Prime, Arsenal, Booty Builder and more, the machines serious lifters drive across town for. 150+ pieces across two floors, so there\'s always the right machine for what you\'re training today.' : p ? 'Most gyms run out of machines before you run out of goals. 150+ pieces across two floors, from the brands serious lifters ask for by name.' : '150+ pieces across 25,000 sq ft and two floors — from the brands serious lifters ask for by name.' }}</span></p>
       </div>
       <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr)); gap: 12px">
         <template v-for="br in brands">
@@ -136,7 +137,7 @@
               </div>
               <ul style="margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; color: #E5E7EB; font-size: 16px">
                 <template v-for="it in (p ? z.nitems : z.items)">
-                  <li style="display: flex; gap: 10px; align-items: flex-start"><span aria-hidden="true" :style="`flex: none; margin-top: 9px; width: 8px; height: 8px; border-radius: 2px; background: ${accent}`"></span><span :class="p ? 'chg' : ''">{{it}}</span></li>
+                  <li style="display: flex; gap: 10px; align-items: flex-start"><span aria-hidden="true" :style="`flex: none; margin-top: 9px; width: 8px; height: 8px; border-radius: 2px; background: ${accent}`"></span><span >{{it}}</span></li>
                 </template>
               </ul>
             </div>
@@ -149,7 +150,7 @@
   <!-- 4. TAKE A LOOK INSIDE: short looping passes of each area -->
   <section style="max-width: 1120px; margin: 0 auto; padding: clamp(48px, 7vw, 88px) 20px">
     <h2 style="margin: 0 0 8px; font-family: Oswald, Impact, sans-serif; font-weight: 700; font-size: clamp(32px, 4.5vw, 48px); text-transform: uppercase; line-height: 1.05">Take a look inside</h2>
-    <p style="margin: 0 0 24px; color: #4B5563"><span :class="p ? 'chg' : ''">{{ p ? 'Picture your first week here. Every area is included with Elite.' : 'Every area, on a loop. All included with Elite.' }}</span></p>
+    <p style="margin: 0 0 24px; color: #4B5563"><span >{{ p ? 'Picture your first week here. Every area is included with Elite.' : 'Every area, on a loop. All included with Elite.' }}</span></p>
     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px">
       <template v-for="c in clips">
         <figure style="margin: 0; display: flex; flex-direction: column; gap: 8px">
@@ -215,7 +216,7 @@
       <div style="display: flex; flex-direction: column; gap: 14px">
         <div :style="`color: ${accent}; font-weight: 700; font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase`">November only · ends Mon 11/30</div>
         <h2 style="margin: 0; font-family: Oswald, Impact, sans-serif; font-weight: 700; font-size: clamp(40px, 6vw, 64px); text-transform: uppercase; line-height: 1">$1 to join.<br>All access.</h2>
-        <p style="margin: 0; color: #E5E7EB; font-size: 18px; max-width: 40ch"><span :class="p ? 'chg' : ''">{{ p ? 'You\'ve waited long enough. Start this week: Elite, the whole gym 24/7, for $1 to start.' : 'Lock in Elite — the whole gym, 24/7 — for $1 to start.' }}</span> {{daysLeft}} to claim it.</p>
+        <p style="margin: 0; color: #E5E7EB; font-size: 18px; max-width: 40ch"><span >{{ p ? 'You\'ve waited long enough. Start this week: Elite, the whole gym 24/7, for $1 to start.' : 'Lock in Elite — the whole gym, 24/7 — for $1 to start.' }}</span> {{daysLeft}} to claim it.</p>
       </div>
       <div style="background: #FFFFFF; color: #111111; border-radius: 18px; padding: 28px; display: flex; flex-direction: column; gap: 16px">
         <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap">
@@ -223,8 +224,8 @@
           <div :style="`background: ${accent}; font-weight: 700; font-size: 13px; padding: 4px 10px; border-radius: 6px`">Most popular</div>
         </div>
         <div style="display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap">
-          <span style="font-family: Oswald, Impact, sans-serif; font-weight: 700; font-size: 56px; line-height: 1">$12</span>
-          <span style="font-size: 18px; color: #374151">a week · billed $24 every 2 weeks</span>
+          <span style="font-family: Oswald, Impact, sans-serif; font-weight: 700; font-size: 56px; line-height: 1" :class="q ? 'chg' : ''">{{ q ? '$24' : '$12' }}</span>
+          <span style="font-size: 18px; color: #374151" :class="q ? 'chg' : ''">{{ q ? 'every 2 weeks · that\'s $12 a week, less than a cup of coffee a day' : 'a week · billed $24 every 2 weeks' }}</span>
         </div>
         <div style="font-weight: 600">$1 enrollment today <span style="color: #4B5563; font-weight: 400">· normally <s>$29</s></span></div>
         <ul style="list-style: none; margin: 0; padding: 0; display: grid; gap: 8px">
@@ -275,9 +276,9 @@
   </footer>
 
   <!-- sticky CTA bar: always one tap away -->
-  <div style="position: sticky; bottom: 0; z-index: 5; background: rgba(255,255,255,0.97); border-top: 1px solid #E5E7EB; box-shadow: 0 -4px 16px rgba(0,0,0,0.06)">
+  <div v-show="!q || pastHero" style="position: sticky; bottom: 0; z-index: 5; background: rgba(255,255,255,0.97); border-top: 1px solid #E5E7EB; box-shadow: 0 -4px 16px rgba(0,0,0,0.06)">
     <div style="max-width: 1120px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px">
-      <div style="font-size: 14px; line-height: 1.3"><strong style="font-size: 16px">$1 to join</strong><br><span style="color: #4B5563">Elite $12/wk · {{daysLeft}}</span></div>
+      <div style="font-size: 14px; line-height: 1.3"><strong style="font-size: 16px">$1 to join</strong><br><span style="color: #4B5563"><span v-show="!q">Elite $12/wk · {{daysLeft}}</span><span v-show="q" class="chg">Elite $24 every 2 weeks · {{daysLeft}}</span></span></div>
       <button type="button" @click="claim" :style="`min-height: 48px; padding: 0 22px; border: 0; background: ${accent}; color: #111111; border-radius: 10px; font: 700 16px Inter, sans-serif; cursor: pointer; box-shadow: 0 2px 0 #111111`">Claim my $1 start</button>
     </div>
   </div>
@@ -387,9 +388,11 @@ class DCLogic { constructor(props) { this.props = props; this.state = {}; } }
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { showForm: false, step: 'info', open: 0, plan: 'elite', compareOpen: false, heroVideo: false, proposed: true };
+    this.state = { showForm: false, step: 'info', open: 0, plan: 'elite', compareOpen: false, heroVideo: false, proposed: true, v3: true, playTour: false, pastHero: false };
   }
   componentDidMount() {
+    const onScroll = () => { const b = document.getElementById('heroCta'); const past = !!b && b.getBoundingClientRect().bottom < 0; if (past !== !!this.state.pastHero) this.setState({ pastHero: past }); };
+    document.addEventListener('scroll', onScroll, { passive: true, capture: true });
     // Load the hero tour only after the page itself has finished loading, so it never slows the first paint.
     const start = () => { this._t = setTimeout(() => this.setState({ heroVideo: true }), 600); };
     if (document.readyState === 'complete') start();
@@ -447,8 +450,12 @@ class Component extends DCLogic {
       accent,
       daysLeft,
       heroVideo: this.state.heroVideo,
-      p: this.state.proposed !== false,
-      setMode: (v) => this.setState({ proposed: v }),
+      p: true,
+      q: this.state.v3 !== false,
+      playTour: this.state.playTour,
+      pastHero: !!this.state.pastHero,
+      startTour: () => this.setState({ playTour: true, heroVideo: true }),
+      setMode: (v) => this.setState({ v3: v }),
       showTransformations: this.props.showTransformations ?? false,
       claim: () => this.setState({ showForm: true, step: 'info', plan: 'elite' }),
       closeForm: () => this.setState({ showForm: false, step: 'info' }),
