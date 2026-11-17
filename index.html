@@ -321,7 +321,7 @@
           <div id="hold-h" style="font-family: Oswald, Impact, sans-serif; font-weight: 700; font-size: 28px; text-transform: uppercase">{{stepTitle}}</div>
           <button type="button" @click="closeForm" aria-label="Close" style="width: 44px; height: 44px; border: 0; background: #F3F4F6; border-radius: 999px; cursor: pointer; font-size: 20px">✕</button>
         </div>
-        <div style="display: flex; gap: 6px" :aria-label="`Step ${stepNum} of 3`">
+        <div style="display: flex; gap: 6px" :aria-label="`Step ${Math.min(stepNum, 2)} of 2`">
           <template v-for="sb in stepBars">
             <div :style="`flex: 1; height: 5px; border-radius: 999px; background: ${sb.color}`"></div>
           </template>
@@ -334,14 +334,20 @@
           <div style="display: flex; flex-direction: column; gap: 12px">
             <label style="display: flex; flex-direction: column; gap: 4px; font-size: 14px; font-weight: 600">First name<input type="text" autocomplete="given-name" style="min-height: 48px; border: 1px solid #9CA3AF; border-radius: 10px; padding: 0 12px; font: 400 17px Inter, sans-serif"></label>
             <label style="display: flex; flex-direction: column; gap: 4px; font-size: 14px; font-weight: 600">Last name<input type="text" autocomplete="family-name" style="min-height: 48px; border: 1px solid #9CA3AF; border-radius: 10px; padding: 0 12px; font: 400 17px Inter, sans-serif"></label>
-            <label style="display: flex; flex-direction: column; gap: 4px; font-size: 14px; font-weight: 600">Mobile phone<input type="tel" autocomplete="tel" style="min-height: 48px; border: 1px solid #9CA3AF; border-radius: 10px; padding: 0 12px; font: 400 17px Inter, sans-serif"></label>
+            <label style="display: flex; flex-direction: column; gap: 4px; font-size: 14px; font-weight: 600">Email<input type="email" autocomplete="email" style="min-height: 48px; border: 1px solid #9CA3AF; border-radius: 10px; padding: 0 12px; font: 400 17px Inter, sans-serif"></label>
+            <label style="display: flex; flex-direction: column; gap: 4px; font-size: 14px; font-weight: 600">Phone<input type="tel" autocomplete="tel" style="min-height: 48px; border: 1px solid #9CA3AF; border-radius: 10px; padding: 0 12px; font: 400 17px Inter, sans-serif"></label>
+            <label style="display: grid; grid-template-columns: 22px 1fr; gap: 10px; font-size: 13px; color: #374151; align-items: start"><input type="checkbox" style="width: 20px; height: 20px; margin: 1px 0 0"><span>I agree to the Privacy Policy and consent to communication from Grit Fitness including calls, text messages and email.</span></label>
             <button type="button" @click="hold" :style="`min-height: 54px; border: 0; background: ${accent}; color: #111111; border-radius: 12px; font: 700 18px Inter, sans-serif; cursor: pointer; box-shadow: 0 2px 0 #111111`">Hold my spot</button>
-            <div style="font-size: 13px; color: #4B5563; text-align: center">Your spot is held for 24 hours. No charge yet.</div>
+            <div style="font-size: 13px; color: #4B5563; text-align: center">No payment yet. You pay on the next step.</div>
           </div>
         </template>
         <template v-if="isPay">
           <div style="display: flex; flex-direction: column; gap: 12px">
-            <label style="display: flex; flex-direction: column; gap: 4px; font-size: 14px; font-weight: 600">Email<input type="email" autocomplete="email" style="min-height: 48px; border: 1px solid #9CA3AF; border-radius: 10px; padding: 0 12px; font: 400 17px Inter, sans-serif"></label>
+            <div style="font: 700 13px Inter, sans-serif; letter-spacing: 0.08em; text-transform: uppercase">Your address</div>
+            <label style="display: flex; flex-direction: column; gap: 4px; font-size: 14px; font-weight: 600">Street address<input type="text" autocomplete="address-line1" placeholder="Start typing your address" style="min-height: 48px; border: 1px solid #9CA3AF; border-radius: 10px; padding: 0 12px; font: 400 17px Inter, sans-serif"></label>
+            <div style="display: grid; grid-template-columns: 1.4fr 0.8fr 1fr; gap: 10px"><label style="display: flex; flex-direction: column; gap: 4px; font-size: 14px; font-weight: 600">City<input type="text" autocomplete="address-level2" style="min-height: 48px; border: 1px solid #9CA3AF; border-radius: 10px; padding: 0 12px; font: 400 17px Inter, sans-serif"></label><label style="display: flex; flex-direction: column; gap: 4px; font-size: 14px; font-weight: 600">State<input type="text" autocomplete="address-level1" value="IN" style="min-height: 48px; border: 1px solid #9CA3AF; border-radius: 10px; padding: 0 12px; font: 400 17px Inter, sans-serif"></label><label style="display: flex; flex-direction: column; gap: 4px; font-size: 14px; font-weight: 600">Zip<input type="text" inputmode="numeric" autocomplete="postal-code" style="min-height: 48px; border: 1px solid #9CA3AF; border-radius: 10px; padding: 0 12px; font: 400 17px Inter, sans-serif"></label></div>
+            <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px"><label style="display: flex; flex-direction: column; gap: 4px; font-size: 14px; font-weight: 600">Date of birth<input type="date" style="min-height: 48px; border: 1px solid #9CA3AF; border-radius: 10px; padding: 0 12px; font: 400 17px Inter, sans-serif"></label><label style="display: flex; flex-direction: column; gap: 4px; font-size: 14px; font-weight: 600">Gender<select style="min-height: 48px; border: 1px solid #9CA3AF; border-radius: 10px; padding: 0 12px; font: 400 17px Inter, sans-serif"><option value="">Select…</option><option>Female</option><option>Male</option></select></label></div>
+            <div style="font: 700 13px Inter, sans-serif; letter-spacing: 0.08em; text-transform: uppercase; padding-top: 4px">Card</div>
             <label style="display: flex; flex-direction: column; gap: 4px; font-size: 14px; font-weight: 600">Card number<input type="text" inputmode="numeric" autocomplete="cc-number" placeholder="1234 1234 1234 1234" style="min-height: 48px; border: 1px solid #9CA3AF; border-radius: 10px; padding: 0 12px; font: 400 17px Inter, sans-serif"></label>
             <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
               <label style="display: flex; flex-direction: column; gap: 4px; font-size: 14px; font-weight: 600">Expiry<input type="text" inputmode="numeric" autocomplete="cc-exp" placeholder="MM / YY" style="min-height: 48px; border: 1px solid #9CA3AF; border-radius: 10px; padding: 0 12px; font: 400 17px Inter, sans-serif"></label>
@@ -352,7 +358,7 @@
               <div style="display: flex; justify-content: space-between; color: #4B5563"><span>Then every 2 weeks</span><span>{{plan.biweekly}}</span></div>
               <div style="display: flex; justify-content: space-between; color: #4B5563"><span>{{plan.annualLabel}}</span><span>{{plan.annual}}</span></div>
             </div>
-            <div style="font-size: 13px; color: #4B5563">By tapping Agree &amp; pay, you agree to the terms &amp; conditions of the Grit Fitness Membership Agreement, billing terms and release of liability.</div>
+            <div style="font-size: 13px; color: #4B5563">By tapping Agree &amp; pay, you agree to the terms &amp; conditions of the Grit Fitness <a href="#" onclick="return false" style="color: #111111; font-weight: 700">Membership Agreement</a>, billing terms and release of liability.</div>
             <button type="button" @click="pay" style="min-height: 54px; border: 0; background: #111111; color: #FFFFFF; border-radius: 12px; font: 700 18px Inter, sans-serif; cursor: pointer">Agree &amp; pay {{plan.dueToday}}</button>
             <button type="button" @click="back" style="min-height: 44px; background: none; border: 0; font: 600 15px Inter, sans-serif; color: #374151; cursor: pointer">Back</button>
           </div>
@@ -459,8 +465,8 @@ class Component extends DCLogic {
       isPay: step === 'pay',
       isDone: step === 'done',
       stepNum,
-      stepTitle: step === 'info' ? 'Hold your spot' : step === 'pay' ? 'Payment' : 'Welcome to Grit',
-      stepBars: [1, 2, 3].map((n) => ({ color: n <= stepNum ? '#111111' : '#E5E7EB' })),
+      stepTitle: step === 'info' ? 'Hold your spot' : step === 'pay' ? 'Finish & pay' : 'Welcome to Grit',
+      stepBars: [1, 2].map((n) => ({ color: n <= stepNum ? '#111111' : '#E5E7EB' })),
       facts: [
         { value: '25,000', label: 'sq ft facility' },
         { value: '150+', label: 'pieces of equipment' },
@@ -526,8 +532,8 @@ class Component extends DCLogic {
       ],
       steps: [
         { n: '1', title: 'Claim your $1 start', text: 'Tap the button — Elite is already picked for you.' },
-        { n: '2', title: 'Hold your spot', text: 'Name and phone. About 2 minutes, start to finish.' },
-        { n: '3', title: 'Train today', text: 'Pay $1, get your access, and come in today.' },
+        { n: '2', title: 'Hold your spot', text: 'Name, email and phone. About 2 minutes, start to finish.' },
+        { n: '3', title: 'Train today', text: 'Add your address and card, get your access, and come in today.' },
       ],
       includes: ['24/7 access', 'Lift Studio', 'Unlimited Small Group Training', 'Cryo & hydro therapy', 'Unlimited tanning & red light', 'Locker rooms + dry sauna', 'Cardio, resistance & free weights', '20% off Grit products'],
       faqs,
